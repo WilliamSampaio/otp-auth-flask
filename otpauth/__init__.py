@@ -18,9 +18,28 @@ def index():
     return render_template('login.jinja2')
 
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
-    return '<h1>Login!</h1>'
+    if request.form:
+        query = Query()
+        model = get_users_tbl()
+
+        users = model.search(query.cpf == request.form.get('cpf'))
+        if len(users) == 0:
+            flash('CPF not found!', 'error')
+            return redirect(url_for('index'))
+
+        user = users[0]
+        pin = extract_num_from_str(request.form.get('pin'))
+
+        totp = pyotp.TOTP(user['secret'])
+        if not totp.verify(pin):
+            flash('Verification failed!', 'error')
+            return redirect(url_for('index'))
+
+        flash('Logged!')
+        return redirect(url_for('index'))
+    return redirect(url_for('index'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
