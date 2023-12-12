@@ -1,0 +1,100 @@
+{% extends "base.jinja2" %}
+{% block title %}{{super()}} - Sign Up{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+        <div class="col-xl-6 col-lg-8 col-md-10">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="text-center">
+                                <h1 class="h4">OTP Auth - Register</h1>
+                            </div>
+
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            <ul class=flashes>
+                                {% for category, message in messages %}
+                                <li>
+                                    {% if category == 'error' %}
+                                    <div class="alert alert-danger" role="alert">{{ message }}</div>
+                                    {% elif category == 'success' %}
+                                    <div class="alert alert-success" role="alert">{{ message }}</div>
+                                    {% else %}
+                                    <div class="alert alert-info" role="alert">{{ message }}</div>
+                                    {% endif %}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            {% endwith %}
+
+                            {% if not otp_stage %}
+                            <form method="POST">
+                                <input type="hidden" name="stage" value="register">
+                                <div class="mb-3">
+                                    <input class="form-control text-center text-uppercase" type="text" id="name"
+                                        name="name" placeholder="Name" maxlength="100" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input class="form-control text-center" type="date" id="birthday" name="birthday"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <input class="form-control text-center" type="text" id="cpf" name="cpf"
+                                        placeholder="CPF" required>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <button class="btn btn-primary" type="submit">Sign Up</button>
+                                </div>
+                            </form>
+                            {% else %}
+                            <form method="POST">
+                                <input type="hidden" name="stage" value="validate">
+                                <input type="hidden" name="cpf" value="{{ user_cpf }}">
+                                <div class="mb-3 text-center">
+                                    <img src="{{ data_qrcode_img }}" width="200">
+                                </div>
+                                <div class="mb-3">
+                                    <input class="form-control text-center" type="text" id="pin" name="pin"
+                                        placeholder="PIN" maxlength="6" required>
+                                </div>
+                                <div class="mb-3 text-center">
+                                    <button class="btn btn-primary" type="submit">Validate</button>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="text-center">
+                                <a class="btn btn-success" href="{{ url_for('index') }}">Sign In</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script type="application/javascript">
+
+    $("#cpf").mask("000.000.000-00")
+    $("#pin").mask("000 000")
+
+</script>
+
+{% endblock %}
