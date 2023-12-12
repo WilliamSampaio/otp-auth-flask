@@ -8,6 +8,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 flask = "^3.0.0"
+pyotp = "^2.9.0"
+tinydb = "^4.8.0"
 
 
 [tool.poetry.group.dev.dependencies]
