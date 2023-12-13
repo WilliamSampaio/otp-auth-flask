@@ -72,6 +72,17 @@ black = "22.1.0"
 flake8 = ">=3.8,<5.0.0"
 
 [[package]]
+name = "cachelib"
+version = "0.10.2"
+description = "A collection of cache libraries in the same API interface."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "cachelib-0.10.2-py3-none-any.whl", hash = "sha256:42d49f2fad9310dd946d7be73d46776bcd4d5fde4f49ad210cfdd447fbdfc346"},
+    {file = "cachelib-0.10.2.tar.gz", hash = "sha256:593faeee62a7c037d50fc835617a01b887503f972fb52b188ae7e50e9cb69740"},
+]
+
+[[package]]
 name = "click"
 version = "8.1.7"
 description = "Composable command line interface toolkit"
@@ -133,6 +144,21 @@ Werkzeug = ">=3.0.0"
 [package.extras]
 async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
+
+[[package]]
+name = "flask-session"
+version = "0.5.0"
+description = "Server-side session support for Flask"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Flask-Session-0.5.0.tar.gz", hash = "sha256:190875e6aebf2953c6803d42379ef3b934bc209ef8ef006f97aecb08f5aaeb86"},
+    {file = "flask_session-0.5.0-py3-none-any.whl", hash = "sha256:1619bcbc16f04f64e90f8e0b17145ba5c9700090bb1294e889956c1282d58631"},
+]
+
+[package.dependencies]
+cachelib = "*"
+flask = ">=2.2"
 
 [[package]]
 name = "isort"
@@ -413,4 +439,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "c631828f7c0e01894bf680aa5fec639542f6d222c82c517a91ad83891399eca8"
+content-hash = "755edee5a0880013244f6cce197b90e4a38ced6877ac70b5fac4a0b1d3f42fe4"
