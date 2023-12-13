@@ -1,0 +1,67 @@
+{% extends "base.jinja2" %}
+{% block title %}{{super()}} - Home{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand">Hi, {{ session['user']['name'].split(' ')[0] }}</a>
+        <form class="d-flex">
+            <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+        <div class="col-xl-12 col-lg-12 col-md-12">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="text-center">
+                                <h1 class="h4">OTP Auth - Home</h1>
+                            </div>
+
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                    {% for category, message in messages %}
+                                        {% if category == 'error' %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            {{ message }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        {% elif category == 'success' %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ message }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        {% else %}
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                            {{ message }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+
+                            <ul class="list-group">
+                                <li class="list-group-item"><b>NOME: </b>{{ session['user']['name'] }}</li>
+                                <li class="list-group-item"><b>BIRTHDAY: </b>{{ session['user']['birthday'] }}</li>
+                                <li class="list-group-item"><b>CPF: </b>{{ session['user']['cpf'] }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

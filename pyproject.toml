@@ -2,12 +2,18 @@
 name = "otp-auth-flask"
 version = "0.1.0"
 description = ""
-authors = ["William B M Sampaio <56176702+WilliamSampaio@users.noreply.github.com>"]
+authors = [
+    "William B M Sampaio <56176702+WilliamSampaio@users.noreply.github.com>",
+]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
 flask = "^3.0.0"
+pyotp = "^2.9.0"
+tinydb = "^4.8.0"
+qrcode = "^7.4.2"
+flask-session = "^0.5.0"
 
 
 [tool.poetry.group.dev.dependencies]
