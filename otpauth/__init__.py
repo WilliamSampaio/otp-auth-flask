@@ -27,11 +27,22 @@ Session(app=app)
 
 @app.route('/')
 def index():
+    if 'user' in session:
+        return redirect(url_for('home'))
     return render_template('login.jinja2')
+
+
+@app.route('/home')
+def home():
+    if 'user' not in session:
+        return redirect(url_for('index'))
+    return render_template('home.jinja2')
 
 
 @app.route('/login', methods=['POST'])
 def login():
+    if 'user' in session:
+        return redirect(url_for('home'))
     if request.form:
         query = Query()
         model = get_users_tbl()
@@ -49,13 +60,16 @@ def login():
             flash('Verification failed!', 'error')
             return redirect(url_for('index'))
 
+        session['user'] = user
         flash('Logged!')
-        return redirect(url_for('index'))
+        return redirect(url_for('home'))
     return redirect(url_for('index'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if 'user' in session:
+        return redirect(url_for('home'))
     if request.form:
         if request.form['stage'] == 'register':
             query = Query()
@@ -117,6 +131,13 @@ def register():
             return redirect(url_for('index'))
 
     return render_template('register.jinja2')
+
+
+@app.route('/logout')
+def logout():
+    if 'user' in session:
+        del session['user']
+    return redirect(url_for('index'))
 
 
 @app.errorhandler(404)
